@@ -76,14 +76,13 @@ function fisherYates() {
 var newGame = function (){
     fisherYates(); 
     back(); 
-    showImage(); 
-    imgOpen(); 
+    game(); 
 }
 
 //Func that returns all the cards back
 var back = function(){
     for (var i =0; i<card.length; i++){
-        card[i].firstChild.src = "./images/back.jpg"; 
+        card[i].src = "./images/back.jpg"; 
     }
 }
 var btn = document.getElementById("btn");
@@ -106,7 +105,7 @@ var imgOpen = function () {
             //    }
           //  }, 1000); 
        // }
-        if (openedImg[0].firstChild.src === openedImg[1].firstChild.src) {
+        if (openedImg[0].src === openedImg[1].src) {
             console.log("same");
             matched();
         } else {
@@ -129,8 +128,8 @@ var matched = function () {
 var interval;
 var unmatched = function () {
     interval = setTimeout(function () {
-        openedImg[0].firstChild.src = "./images/back.jpg";
-        openedImg[1].firstChild.src = "./images/back.jpg";
+        openedImg[0].src = "./images/back.jpg";
+        openedImg[1].src = "./images/back.jpg";
         openedImg = []; 
     }, 1000);
 }
@@ -138,7 +137,9 @@ var unmatched = function () {
 
 //Add event listener to each card
 var card = document.getElementsByClassName("card");
-for (var i = 0; i < card.length; i++) {
-    card[i].addEventListener("click", showImage);
-    card[i].addEventListener("click", imgOpen);
+game = function () {
+    for (var i = 0; i < card.length; i++) {
+        card[i].addEventListener("click", showImage);
+        card[i].addEventListener("click", imgOpen);
+    }
 }
