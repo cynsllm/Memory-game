@@ -18,7 +18,14 @@ body {
     text-align: center;
 }
 
-#btn {
+#btn1 {
+    
+    background-color: orange;
+    border:none; 
+    width: 200px;
+    height: 50px;
+}
+#btn2 {
     
     background-color: orange;
     border:none; 
@@ -30,12 +37,24 @@ img {
     width: inherit;
     margin: 10px 10px;
 }
-.col-xs-5.col-lg-2 {
-    margin: 15px 15px;
-}
+
 .col-xs-12 {
     text-align: center; 
 }
 .col-xs-10.col-lg-8 {
     text-align: center;
+}
+.modal-content {
+    width: 800px;
+    height: 747px;
+    margin: auto; 
+    background-image: url('../images/monster.jpg');
+    background-position: center;
+    background-size: cover;
+}
+.modal p {
+    text-align: center;
+    font-family:'Black And White Picture', sans-serif;
+    color: orange; 
+    font-size: 100px;
 }
