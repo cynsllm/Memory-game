@@ -4,19 +4,6 @@ var imagesArray = ["./images/ananas.jpg", "./images/banana.jpg", "./images/citru
 var counter = 0;
 
 
-//Var definitions 
-// var card1 = document.getElementById("card1");
-// var card2 = document.getElementById("card2");
-// var card3 = document.getElementById("card3");
-// var card4 = document.getElementById("card4");
-// var card5 = document.getElementById("card5");
-// var card6 = document.getElementById("card6");
-// var card7 = document.getElementById("card7");
-// var card8 = document.getElementById("card8");
-// var card9 = document.getElementById("card9");
-// var card10 = document.getElementById("card10");
-// var card11 = document.getElementById("card11");
-// var card12 = document.getElementById("card12");
 
 //Func that assignes an image to each card and shows image when card is clicked
 
@@ -24,45 +11,14 @@ var card = document.getElementsByClassName("card");
 function showImage() {
     for (var i = 0; i < card.length; i++) {
         var x = event.target;
+        console.log(x); 
         if (x === card[i]) {
             card[i].src = imagesArray[i];
         }
-
     }
 }
 
 
-
-
-
-// function showImage() {
-//     var x = event.target;
-//     if (x.id === "card1") {
-//         card1.src = imagesArray[0];
-//     } else if (x.id === "card2") {
-//         card2.src = imagesArray[1];
-//     } else if (x.id === "card3") {
-//         card3.src = imagesArray[2];
-//     } else if (x.id === "card4") {
-//         card4.src = imagesArray[3];
-//     } else if (x.id === "card5") {
-//         card5.src = imagesArray[4];
-//     } else if (x.id === "card6") {
-//         card6.src = imagesArray[5];
-//     } else if (x.id === "card7") {
-//         card7.src = imagesArray[6];
-//     } else if (x.id === "card8") {
-//         card8.src = imagesArray[7];
-//     } else if (x.id === "card9") {
-//         card9.src = imagesArray[8];
-//     } else if (x.id === "card10") {
-//         card10.src = imagesArray[9];
-//     } else if (x.id === "card11") {
-//         card11.src = imagesArray[10];
-//     } else if (x.id === "card12") {
-//         card12.src = imagesArray[11];
-//     }
-// }
 
 //Func that randomizes the array of images
 function fisherYates() {
@@ -89,7 +45,7 @@ var back = function () {
     }
 }
 var btn1 = document.getElementById("btn1");
-btn1.addEventListener("click", newGame);
+btn1.addEventListener("click", new);
 
 //new game modal
 var btn2 = document.getElementById("btn2");
