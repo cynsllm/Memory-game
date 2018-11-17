@@ -1,137 +1,119 @@
-//The array contains all the images src
-var imagesArray = ["./images/ananas.jpg", "./images/banana.jpg", "./images/citrus.jpg", "./images/kiwi.jpg", "./images/papaye.jpg", "./images/water-melon.jpg", "./images/ananas.jpg", "./images/banana.jpg", "./images/citrus.jpg", "./images/kiwi.jpg", "./images/papaye.jpg", "./images/water-melon.jpg"];
+//Variables declaration
+var backImg = ["./images/back.jpg"];
+var frontImg = ["./images/bat.jpg", "./images/makeup.jpg", "./images/moon.jpg", "./images/pumpkin.jpg", "./images/skeleton.jpg", "./images/spider.jpg", "./images/bat.jpg", "./images/makeup.jpg", "./images/moon.jpg", "./images/pumpkin.jpg", "./images/skeleton.jpg", "./images/spider.jpg"];
+var matchCounter = 0;
+var unmatchCounter = 0;
 
-var counter = 0;
 
+//Function newGame: 
+var btn1 = document.getElementById("btn1");
+var newGame = function () {
+    for (var i = 0; i < card.length; i++) {
+        card[i].style.visibility = "visible"; 
+        card[i].src = "./images/back.jpg"; 
+    }
+    fisherYates(); 
+    cardEvent(); 
+}
+btn1.addEventListener("click", newGame); //when the NEW GAME btn is clicked
 
+//Function fisherYates randomizes the frontImg array
+var fisherYates = function() {
+    for (var flips = 0; flips < 100; flips++) {
+        var i = Math.floor(Math.random() * frontImg.length);
+        var j = Math.floor(Math.random() * frontImg.length);
+        var temp = frontImg[i];
+        frontImg[i] = frontImg[j];
+        frontImg[j] = temp;
+    }
+}
 
-//Func that assignes an image to each card and shows image when card is clicked
-
+//Function cardEvent:
 var card = document.getElementsByClassName("card");
-function showImage() {
+var cardEvent = function () {
+    for (var i = 0; i < card.length; i++) {
+        card[i].addEventListener("click", showImage); 
+        card[i].addEventListener("click", checkImgPair); 
+    }
+}
+
+//Function showImage assignes a front img to each card in the grid when the card is clicked
+var card = document.getElementsByClassName("card");
+var showImage = function() {
     for (var i = 0; i < card.length; i++) {
         var x = event.target;
-        console.log(x); 
         if (x === card[i]) {
-            card[i].src = imagesArray[i];
+            card[i].src = frontImg[i];
         }
     }
 }
 
-
-
-//Func that randomizes the array of images
-function fisherYates() {
-    for (var flips = 0; flips < 100; flips++) {
-        var i = Math.floor(Math.random() * imagesArray.length);
-        var j = Math.floor(Math.random() * imagesArray.length);
-        var temp = imagesArray[i];
-        imagesArray[i] = imagesArray[j];
-        imagesArray[j] = temp;
-    }
-}
-
-//Func new game randomize + returns all the cards
-var newGame = function () {
-    fisherYates();
-    back();
-    game();
-}
-
-//Func that returns all the cards back
-var back = function () {
-    for (var i = 0; i < card.length; i++) {
-        card[i].src = "./images/back.jpg";
-    }
-}
-var btn1 = document.getElementById("btn1");
-btn1.addEventListener("click", new);
-
-//new game modal
-var btn2 = document.getElementById("btn2");
-btn2.addEventListener("click", newGame);
-// replay 
-btn2.onclick = function () {
-    modal.style.display = "none";
-}
-
-//Func that checks if cards are the same
-var openedImg = [];
-var imgOpen = function () {
-    openedImg.push(this);
-    console.log(openedImg);
-    var len = openedImg.length;
+//Function checkImgPair checks if a pair of img have the same src
+var imgPair = [];
+var checkImgPair = function () {
+    imgPair.push(this);
+    var len = imgPair.length;
     if (len === 2) {
-        console.log(openedImg[0]);
-        console.log(openedImg[1]);
-        disableGame();
-        if (openedImg[0].src === openedImg[1].src) {
-            console.log("same");
-            matched();
-
-
+        disableCard(); 
+        if (imgPair[0].src === imgPair[1].src) {
+            match(); 
         } else {
-            console.log("different");
-            unmatched();
+            unmatched(); 
         }
     }
 }
 
-//Func that disables the cards when match
-var matched = function () {
-    openedImg[0].removeEventListener("click", showImage);
-    openedImg[1].removeEventListener("click", showImage);
-    openedImg = [];
-    scoreCounter();
+//Function disableCard disables all the grid for a second when two cards were clicked
+var disableCard = function () {
+    for (var i = 0; i < card.length; i++) {
+        card[i].removeEventListener("click", showImage); 
+        card[i].removeEventListener("click", checkImgPair);
+    }
+    setTimeout(function () {
+        cardEvent(); 
+    }, 1000);
 }
 
+//Function match that disables the pairs when they match until the end of the game
+var match = function () {
+    imgPair[0].removeEventListener("click", showImage);
+    imgPair[1].removeEventListener("click", showImage);
+    imgPair = [];
+    scoreCounter(); 
+}
 
+//Function scoreCounter records the number of matches and displays a modal when the user find all the pairs
+var modal = document.getElementById("display-score");
+var span = document.getElementsByClassName("close")[0];
+var scoreCounter = function () {
+    matchCounter = matchCounter + 1;
+    if (matchCounter === 6) {
+        modal.style.display = "block";
+        document.getElementsByTagName("p")[0].innerHTML = "YOU WON " + "<br/>" + "Wrong guesses: " + unmatchCounter;
+        span.onclick = function () {
+        modal.style.display = "none";
+        matchCounter = 0; //I assign the value 0 to matchCounter but it doesn't change anything...
+        }
+    }
+}
+//The modal contains btn2 to remove the modal and start the game again 
+var btn2 = document.getElementById("btn2"); 
+btn2.onclick = function () {
+    modal.style.display = "none"; 
+}
+btn2.addEventListener("click", newGame);
 
-//Func that returns the cards unmatched after 1 sec delay
+//Function unmatched returns the cards unmatched after 1 sec delay and records the wrong guesses
 var interval;
 var unmatched = function () {
     interval = setTimeout(function () {
-        openedImg[0].src = "./images/back.jpg";
-        openedImg[1].src = "./images/back.jpg";
-        openedImg = [];
+        imgPair[0].src = "./images/back.jpg";
+        imgPair[1].src = "./images/back.jpg";
+        imgPair = [];
     }, 1000);
+    unmatchCounter = unmatchCounter + 1;
 }
 
-
-//Add event listener to each card
-var card = document.getElementsByClassName("card");
-game = function () {
-    for (var i = 0; i < card.length; i++) {
-        card[i].addEventListener("click", showImage);
-        card[i].addEventListener("click", imgOpen);
-    }
-}
-
-//disable for a second
-disableGame = function () {
-    for (var i = 0; i < card.length; i++) {
-        card[i].removeEventListener("click", showImage);
-        card[i].removeEventListener("click", imgOpen);
-    }
-    setTimeout(function () {
-        game()
-    }, 1000);
-}
-
-//display you won 
-var modal = document.getElementById("display-score");
-scoreCounter = function () {
-    console.log(counter = counter + 1);
-    if (counter === 6) {
-        console.log("you won");
-        // get the modal
-        var span = document.getElementsByClassName("close")[0]; // get the span that closes the modal
-        modal.style.display = "block";
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-    }
-}
 
 
 
