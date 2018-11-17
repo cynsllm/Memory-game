@@ -10,13 +10,11 @@ body {
     font-family:'Black And White Picture', sans-serif;
     font-size: 80px;
 }
-
 #score {
     color:white; 
     font-family:'Black And White Picture', sans-serif;
     text-align: center;
 }
-
 #btn1 {
     background-color: orange;
     border:none; 
@@ -37,7 +35,6 @@ img {
     margin: 10px 10px;
     visibility: hidden;
 }
-
 .col-xs-12 {
     text-align: center; 
 }
@@ -60,7 +57,7 @@ img {
 }
 @media only screen and (max-width : 1130px) {
     .modal-content {
-        width: 100%; 
+    width: 100%; 
     }
 }
 .col-lg-2.theme {
